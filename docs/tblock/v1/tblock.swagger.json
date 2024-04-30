@@ -1,0 +1,142 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "buf:lint:ignore PACKAGE_DIRECTORY_MATCH",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "TBlockService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/tblock/details": {
+      "post": {
+        "operationId": "TBlockService_Details",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1TBlockServiceDetailsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1TBlockServiceDetailsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TBlockService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1TBlockServiceDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "hash": {
+          "type": "string"
+        }
+      },
+      "title": "查询交易详情"
+    },
+    "v1TBlockServiceDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "typeCn": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string"
+        },
+        "parentHash": {
+          "type": "string"
+        },
+        "daemonHash": {
+          "type": "string"
+        },
+        "daemonHeight": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "linker": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "joule": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    }
+  }
+}

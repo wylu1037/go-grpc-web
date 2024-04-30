@@ -1,0 +1,11 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    queries: "sql/query.sql" # DML、DQL
+    schema: "sql/schema.sql" # DDL
+    gen:
+      go:
+        package: "database" # go package name
+        out: "./" # directory name, same as package
+        emit_json_tags: true
+        json_tags_case_style: camel # pascal, snake

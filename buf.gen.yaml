@@ -1,0 +1,23 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: lattice-manager-grpc/gen
+plugins:
+  - plugin: go
+    out: gen
+    opt:
+      - paths=source_relative
+  - plugin: go-grpc
+    out: gen
+    opt:
+      - paths=source_relative
+  - plugin: grpc-gateway
+    out: gen
+    opt:
+      - paths=source_relative
+      - generate_unbound_methods=true
+  - plugin: openapiv2
+    out: docs
+    opt:
+      - logtostderr=true
