@@ -24,14 +24,14 @@ The go web build with gRPC.
 ## Environment
 Before you start, make sure you have Git, Go, Docker, gRPC, sqlC, and Sqlite3 installed.
 
-<h3>Buf</h5>
+<h5>Buf</h5>
 
 ``` shell
 go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 ```
 
-<h3>gRPC-Gateway</h3>
+<h5>gRPC-Gateway</h5>
 
 ``` shell
 go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
@@ -40,13 +40,13 @@ go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
 ## Getting start
 
-<h3>Generate proto</h3>
+<h5>Generate proto</h5>
 
 ``` shell
 buf generate proto
 ```
 
-<h3>Generate database</h3>
+<h5>Generate database</h5>
 
 ```shell
 sqlc generate
