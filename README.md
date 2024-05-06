@@ -27,8 +27,8 @@ Before you start, make sure you have Git, Go, Docker, gRPC, sqlC, and Sqlite3 in
 <h5>Buf</h5>
 
 ``` shell
-go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 ```
 
 <h5>gRPC-Gateway</h5>
