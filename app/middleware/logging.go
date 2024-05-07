@@ -7,11 +7,12 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
+	"lattice-manager-grpc/config"
 	"os"
 	"time"
 )
 
-func NewLoggingInterceptor() grpc.UnaryServerInterceptor {
+func NewLoggingInterceptor(cfg *config.Config) grpc.UnaryServerInterceptor {
 	opts := []logging.Option{
 		logging.WithLogOnEvents(logging.StartCall, logging.FinishCall),
 		logging.WithTimestampFormat(zerolog.TimeFormatUnix),
@@ -24,10 +25,15 @@ func NewLoggingInterceptor() grpc.UnaryServerInterceptor {
 		log.Fatal().Err(err).Msg("Failed to open log logFile")
 	}
 
-	log.Logger = log.Output(zerolog.MultiLevelWriter(
-		file,
-		zerolog.ConsoleWriter{Out: os.Stdout},
-	))
+	zerolog.SetGlobalLevel(cfg.Logger.Level)
+	if cfg.Logger.Prettier {
+		log.Logger = log.Output(zerolog.MultiLevelWriter(
+			file,
+			zerolog.ConsoleWriter{Out: os.Stdout},
+		))
+	} else {
+		log.Logger = log.Output(file)
+	}
 
 	return logging.UnaryServerInterceptor(InterceptorLogger(log.Logger), opts...)
 }

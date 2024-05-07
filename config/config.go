@@ -38,9 +38,8 @@ type chain = struct {
 
 // log struct config
 type logger = struct {
-	TimeFormat string        `toml:"time-format"`
-	Level      zerolog.Level `toml:"level"`
-	Prettier   bool          `toml:"prettier"`
+	Level    zerolog.Level `toml:"level"`
+	Prettier bool          `toml:"prettier"`
 }
 
 // middleware

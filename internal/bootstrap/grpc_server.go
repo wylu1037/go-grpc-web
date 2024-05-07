@@ -10,6 +10,7 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"lattice-manager-grpc/app/middleware"
 	"lattice-manager-grpc/app/router"
+	"lattice-manager-grpc/config"
 	"log"
 	"net"
 	"net/http"
@@ -19,8 +20,8 @@ var (
 	port = flag.Int("port", 50051, "The server port")
 )
 
-func NewGRPCServer() *grpc.Server {
-	return grpc.NewServer(middleware.RegisterInterceptors())
+func NewGRPCServer(config *config.Config) *grpc.Server {
+	return grpc.NewServer(middleware.RegisterInterceptors(config))
 }
 
 func newGRPCClientConn() *grpc.ClientConn {
