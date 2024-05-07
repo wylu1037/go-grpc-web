@@ -8,6 +8,7 @@ import (
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"lattice-manager-grpc/app/middleware"
 	"lattice-manager-grpc/app/router"
 	"log"
 	"net"
@@ -19,7 +20,7 @@ var (
 )
 
 func NewGRPCServer() *grpc.Server {
-	return grpc.NewServer()
+	return grpc.NewServer(middleware.RegisterInterceptors())
 }
 
 func newGRPCClientConn() *grpc.ClientConn {
