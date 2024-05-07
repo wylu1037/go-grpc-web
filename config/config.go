@@ -122,6 +122,7 @@ func NewConfig() *Config {
 		// panic if config is not found
 		log.Panic().Err(err).Msg("config not found")
 	}
+	log.Info().Msg("config loaded")
 	return config
 }
 

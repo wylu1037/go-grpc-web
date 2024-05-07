@@ -14,5 +14,7 @@ type tBlockServer struct {
 }
 
 func (t tBlockServer) Details(ctx context.Context, request *tblockv1.TBlockServiceDetailsRequest) (*tblockv1.TBlockServiceDetailsResponse, error) {
-	return nil, nil
+	return &tblockv1.TBlockServiceDetailsResponse{
+		Hash: request.Hash,
+	}, nil
 }

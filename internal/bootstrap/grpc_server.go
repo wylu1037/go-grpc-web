@@ -5,13 +5,13 @@ import (
 	"flag"
 	"fmt"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/rs/zerolog/log"
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"lattice-manager-grpc/app/middleware"
 	"lattice-manager-grpc/app/router"
 	"lattice-manager-grpc/config"
-	"log"
 	"net"
 	"net/http"
 )
@@ -32,7 +32,7 @@ func newGRPCClientConn() *grpc.ClientConn {
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
-		log.Fatalln("Failed to dial grpc-gateway server:", err)
+		log.Fatal().Err(err).Msg("Failed to dial grpc-gateway server")
 	}
 	return conn
 }
@@ -55,21 +55,21 @@ func Start(lifecycle fx.Lifecycle, grpcServer *grpc.Server, r *router.Router) {
 			flag.Parse()
 			lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 			if err != nil {
-				log.Fatalf("failed to listen: %v", err)
+				log.Fatal().Err(err).Msgf("failed to listen")
 			}
 
 			r.Register()
 
 			go func() {
 				if err := grpcServer.Serve(lis); err != nil {
-					log.Fatalf("failed to serve: %v", err)
+					log.Fatal().Err(err).Msg("failed to serve")
 				}
 			}()
 
 			// start grpc-gateway
 			go func() {
 				if err := startGRPCGatewayServer(); err != nil {
-					log.Fatalf("failed to serve: %v", err)
+					log.Fatal().Msgf("failed to serve: %v", err)
 				}
 			}()
 

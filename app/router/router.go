@@ -9,24 +9,29 @@ import (
 )
 
 type Router struct {
-	grpcServer *grpc.Server
-	chat       helloworld.GreeterServer
+	grpcServer    *grpc.Server
+	greeterServer helloworld.GreeterServer
+	tBlockServer  tblockv1.TBlockServiceServer
 }
 
 type handlerFunc func(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error
 
 var handlers []handlerFunc
 
-func NewRouter(grpcServer *grpc.Server, chat helloworld.GreeterServer) *Router {
+func NewRouter(grpcServer *grpc.Server, greeterServer helloworld.GreeterServer, tBlockServer tblockv1.TBlockServiceServer) *Router {
 	return &Router{
-		grpcServer: grpcServer,
-		chat:       chat,
+		grpcServer:    grpcServer,
+		greeterServer: greeterServer,
+		tBlockServer:  tBlockServer,
 	}
 }
 
 func (r *Router) Register() {
-	helloworld.RegisterGreeterServer(r.grpcServer, r.chat)
+	// gRPC call
+	helloworld.RegisterGreeterServer(r.grpcServer, r.greeterServer)
+	tblockv1.RegisterTBlockServiceServer(r.grpcServer, r.tBlockServer)
 
+	// http call: gRPC-gateway
 	handlers = append(handlers, helloworld.RegisterGreeterHandler, tblockv1.RegisterTBlockServiceHandler)
 }
 
