@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
+	"github.com/rs/zerolog/log"
 	"lattice-manager-grpc/gen/helloworld"
-	"log"
 )
 
 func NewHelloWorldServer() helloworld.GreeterServer {
@@ -15,6 +15,6 @@ type chatServer struct {
 }
 
 func (s *chatServer) SayHello(ctx context.Context, in *helloworld.HelloRequest) (*helloworld.HelloReply, error) {
-	log.Printf("Received: %v", in.GetName())
+	log.Info().Msgf("Received: %v", in.GetName())
 	return &helloworld.HelloReply{Message: "Hello " + in.GetName()}, nil
 }

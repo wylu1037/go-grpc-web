@@ -3,8 +3,10 @@ module lattice-manager-grpc
 go 1.20
 
 require (
+	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.1.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1
 	github.com/juju/ratelimit v1.0.2
+	github.com/pelletier/go-toml/v2 v2.2.2
 	github.com/rs/zerolog v1.32.0
 	go.uber.org/fx v1.21.1
 	google.golang.org/grpc v1.63.2
