@@ -9,7 +9,7 @@ import (
 	"runtime"
 )
 
-func NewRecoveryInterceptor() grpc.ServerOption {
+func NewRecoveryInterceptor() grpc.UnaryServerInterceptor {
 	// Define recoveryFunc to handle panic
 	recoveryFunc := func(p any) (err error) {
 		return status.Errorf(codes.Unknown, "panic triggered: %v", p)
@@ -19,7 +19,7 @@ func NewRecoveryInterceptor() grpc.ServerOption {
 		WithRecoveryHandler(recoveryFunc),
 	}
 
-	return grpc.UnaryInterceptor(UnaryServerRecoveryInterceptor(opts...))
+	return UnaryServerRecoveryInterceptor(opts...)
 }
 
 // RecoveryHandlerFunc is a function that recovers from the panic `p` by returning an `error`.
