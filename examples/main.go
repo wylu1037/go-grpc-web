@@ -46,7 +46,7 @@ func SayHello(conn *grpc.ClientConn) {
 	// Contact the server and print out its response.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.SayHello(ctx, &helloworld.HelloRequest{Name: "Hello"})
+	r, err := c.SayHello(ctx, &helloworld.HelloRequest{Name: "Jack"})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
