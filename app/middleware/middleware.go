@@ -5,6 +5,21 @@ import (
 	"lattice-manager-grpc/config"
 )
 
-func RegisterInterceptors(config *config.Config) grpc.ServerOption {
-	return grpc.ChainUnaryInterceptor(NewRecoveryInterceptor(), NewRateLimitInterceptor(), NewLoggingInterceptor(config))
+var unaryServerInterceptors []grpc.UnaryServerInterceptor
+
+func RegisterInterceptors(cfg *config.Config) grpc.ServerOption {
+	register(NewRecoveryInterceptor(), NewLoggingInterceptor(cfg))
+
+	if cfg.Middleware.Limiter.Enable {
+		register(NewRateLimitInterceptor())
+	}
+	if cfg.Middleware.Jwt.Enable {
+		register(NewAuthInterceptor())
+	}
+
+	return grpc.ChainUnaryInterceptor(unaryServerInterceptors...)
+}
+
+func register(unaryServerInterceptor ...grpc.UnaryServerInterceptor) {
+	unaryServerInterceptors = append(unaryServerInterceptors, unaryServerInterceptor...)
 }

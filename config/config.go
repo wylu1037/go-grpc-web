@@ -76,6 +76,7 @@ type middleware = struct {
 	}
 
 	Jwt struct {
+		Enable     bool          `toml:"enable"`
 		Secret     string        `toml:"secret"`
 		Expiration time.Duration `toml:"expiration_seconds"`
 	}

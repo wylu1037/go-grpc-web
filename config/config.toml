@@ -39,6 +39,7 @@ max = 20
 expiration_seconds = 60
 
 [middleware.jwt]
+enable = false
 secret = "secret"
 expiration_seconds = 3600
 
