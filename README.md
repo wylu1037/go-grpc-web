@@ -51,3 +51,6 @@ buf generate proto
 ```shell
 sqlc generate
 ```
+
+## Api Docs
+[swagger-ui](http://localhost:50052)
