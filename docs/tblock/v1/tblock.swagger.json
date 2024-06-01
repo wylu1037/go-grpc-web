@@ -85,7 +85,7 @@
           "type": "string"
         }
       },
-      "title": "查询交易详情"
+      "title": "查询交易详情请求"
     },
     "v1TBlockServiceDetailsResponse": {
       "type": "object",

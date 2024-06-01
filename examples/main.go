@@ -5,7 +5,7 @@ import (
 	"flag"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"lattice-manager-grpc/gen/helloworld"
+	"lattice-manager-grpc/gen/ping"
 	tblockv1 "lattice-manager-grpc/gen/tblock/v1"
 	"log"
 	"time"
@@ -16,7 +16,7 @@ func main() {
 	conn, fn := newClient()
 	defer fn(conn)
 
-	SayHello(conn)
+	Ping(conn)
 	tBlockDetails(conn)
 }
 
@@ -40,17 +40,17 @@ func newClient() (*grpc.ClientConn, func(conn *grpc.ClientConn)) {
 	}
 }
 
-func SayHello(conn *grpc.ClientConn) {
-	c := helloworld.NewGreeterClient(conn)
+func Ping(conn *grpc.ClientConn) {
+	c := ping.NewPingServiceClient(conn)
 
-	// Contact the server and print out its response.
+	// Contact the server and print out its types.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.SayHello(ctx, &helloworld.HelloRequest{Name: "Jack"})
+	r, err := c.Ping(ctx, &ping.PingRequest{})
 	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+		log.Fatalf("could not ping: %v", err)
 	}
-	log.Printf("Greeting: %s", r.GetMessage())
+	log.Printf("Ping: %s", r.Reply)
 }
 
 func tBlockDetails(conn *grpc.ClientConn) {

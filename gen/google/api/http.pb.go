@@ -115,7 +115,7 @@ func (x *Http) GetFullyDecodeReservedExpansion() bool {
 // `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies
 // how different portions of the gRPC request message are mapped to the URL
 // path, URL query parameters, and HTTP request body. It also controls how the
-// gRPC response message is mapped to the HTTP response body. `HttpRule` is
+// gRPC types message is mapped to the HTTP types body. `HttpRule` is
 // typically specified as an `google.api.http` annotation on the gRPC method.
 //
 // Each mapping specifies a URL path template and an HTTP method. The path
@@ -366,8 +366,8 @@ func (x *Http) GetFullyDecodeReservedExpansion() bool {
 // Repeated message fields must not be mapped to URL query parameters, because
 // no client library can support such complicated mapping.
 //
-// If an API needs to use a JSON array for request or response body, it can map
-// the request or response body to a repeated field. However, some gRPC
+// If an API needs to use a JSON array for request or types body, it can map
+// the request or types body to a repeated field. However, some gRPC
 // Transcoding implementations may not support this feature.
 type HttpRule struct {
 	state         protoimpl.MessageState
@@ -398,11 +398,11 @@ type HttpRule struct {
 	// NOTE: the referred field must be present at the top-level of the request
 	// message type.
 	Body string `protobuf:"bytes,7,opt,name=body,proto3" json:"body,omitempty"`
-	// Optional. The name of the response field whose value is mapped to the HTTP
-	// response body. When omitted, the entire response message will be used
-	// as the HTTP response body.
+	// Optional. The name of the types field whose value is mapped to the HTTP
+	// types body. When omitted, the entire types message will be used
+	// as the HTTP types body.
 	//
-	// NOTE: The referred field must be present at the top-level of the response
+	// NOTE: The referred field must be present at the top-level of the types
 	// message type.
 	ResponseBody string `protobuf:"bytes,12,opt,name=response_body,json=responseBody,proto3" json:"response_body,omitempty"`
 	// Additional HTTP bindings for the selector. Nested bindings must

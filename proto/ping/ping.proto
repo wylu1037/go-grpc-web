@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package ping;
+
+import "types/types.proto";
+import "google/api/annotations.proto";
+
+service PingService {
+  // 测试连接
+  rpc Ping(PingRequest) returns (PongResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/ping"
+    };
+  }
+}
+
+message PingRequest {
+
+}
+
+message PongResponse {
+  string reply = 1; // 响应
+}

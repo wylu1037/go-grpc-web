@@ -8,5 +8,10 @@ gen_proto:
 
 gen_db:
 	@echo "Generate database"
-	@sqlc generate
+	@cd app/database && sqlc generate
 	@echo "🏁 Generate completed."
+
+buf_mod_update:
+	@echo "buf mod update"
+	@cd proto && buf mod update
+	@echo "🏁 Buf mod update completed."

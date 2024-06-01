@@ -8,7 +8,7 @@ import (
 var unaryServerInterceptors []grpc.UnaryServerInterceptor
 
 func RegisterInterceptors(cfg *config.Config) grpc.ServerOption {
-	register(NewRecoveryInterceptor(), NewLoggingInterceptor(cfg))
+	register(NewRecoveryInterceptor(), NewLoggingInterceptor(cfg), NewValidatorInterceptor())
 
 	if cfg.Middleware.Limiter.Enable {
 		register(NewRateLimitInterceptor())

@@ -2,7 +2,7 @@ package main
 
 import (
 	"go.uber.org/fx"
-	"lattice-manager-grpc/app/module/helloworld"
+	"lattice-manager-grpc/app/module/ping"
 	"lattice-manager-grpc/app/module/tblock"
 	"lattice-manager-grpc/app/router"
 	"lattice-manager-grpc/config"
@@ -14,7 +14,7 @@ func main() {
 		fx.Provide(config.NewConfig),
 		fx.Provide(bootstrap.NewGRPCServer),
 		fx.Provide(router.NewRouter),
-		helloworld.NewModule,
+		ping.NewModule,
 		tblock.NewModule,
 		fx.Invoke(bootstrap.Start),
 	).Run()

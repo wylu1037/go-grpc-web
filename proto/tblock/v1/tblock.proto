@@ -4,6 +4,7 @@ syntax = "proto3";
 package tblock.v1;
 
 import "google/api/annotations.proto";
+import "buf/validate/validate.proto";
 
 service TBlockService {
   rpc Details(TBlockServiceDetailsRequest) returns (TBlockServiceDetailsResponse) {
@@ -16,7 +17,7 @@ service TBlockService {
 
 // 查询交易详情请求
 message TBlockServiceDetailsRequest {
-  string hash = 1;
+  string hash = 1 [(buf.validate.field).string = {prefix: "0x", len: 66}];
 }
 
 message TBlockServiceDetailsResponse {
