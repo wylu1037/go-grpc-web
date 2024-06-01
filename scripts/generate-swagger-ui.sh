@@ -8,7 +8,7 @@ SWAGGER_UI_VERSION=v5.17.10
 
 SWAGGER_UI_GIT="https://github.com/swagger-api/swagger-ui.git"
 CACHE_DIR="../.cache/swagger-ui/$SWAGGER_UI_VERSION"
-GEN_DIR="../third_party/OpenAPI"
+GEN_DIR="../third_party/swagger-ui"
 
 escape_str() {
   echo "$1" | sed -e 's/[]\/$*.^[]/\\&/g'

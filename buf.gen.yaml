@@ -20,6 +20,6 @@ plugins:
       - paths=source_relative
       - generate_unbound_methods=true
   - plugin: openapiv2
-    out: docs
+    out: third_party/swagger-ui
     opt:
       - logtostderr=true

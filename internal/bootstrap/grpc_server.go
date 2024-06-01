@@ -9,11 +9,15 @@ import (
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"io/fs"
 	"lattice-manager-grpc/app/middleware"
 	"lattice-manager-grpc/app/router"
 	"lattice-manager-grpc/config"
+	"lattice-manager-grpc/third_party"
+	"mime"
 	"net"
 	"net/http"
+	"strings"
 )
 
 var (
@@ -42,10 +46,29 @@ func startGRPCGatewayServer() error {
 	mux := runtime.NewServeMux()
 	router.RegisterHandler(mux, grpcClientConn)
 	server := &http.Server{
-		Addr:    fmt.Sprintf(":%d", *port+1),
-		Handler: mux,
+		Addr: fmt.Sprintf(":%d", *port+1),
+		Handler: http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+			if strings.HasPrefix(request.URL.Path, "/api") {
+				mux.ServeHTTP(writer, request)
+				return
+			}
+			newSwaggerUIHandler().ServeHTTP(writer, request)
+		}),
 	}
 	return server.ListenAndServe()
+}
+
+// new swagger-ui handler
+// Returns:
+//   - http.Handler: impl func ServeHTTP(ResponseWriter, *Request)
+func newSwaggerUIHandler() http.Handler {
+	_ = mime.AddExtensionType(".svg", "image/svg+xml")
+	// Use subdirectory in embedded files
+	subFS, err := fs.Sub(third_party.SwaggerUI, "swagger-ui")
+	if err != nil {
+		panic("swagger-ui couldn't create sub filesystem: " + err.Error())
+	}
+	return http.FileServer(http.FS(subFS))
 }
 
 // Start 启动 GRPC 服务
